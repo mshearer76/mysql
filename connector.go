@@ -12,6 +12,7 @@ import (
 	"context"
 	"database/sql/driver"
 	"net"
+	"fmt"
 )
 
 type connector struct {
@@ -128,6 +129,8 @@ func (c *connector) Connect(ctx context.Context) (driver.Conn, error) {
 	if mc.maxAllowedPacket < maxPacketSize {
 		mc.maxWriteSize = mc.maxAllowedPacket
 	}
+
+	fmt.Printf("max_allowed_packet = %d\n", mc.maxAllowedPacket)
 
 	// Handle DSN Params
 	err = mc.handleParams()
